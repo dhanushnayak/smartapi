@@ -19,7 +19,7 @@ def user(username,password):
     data = mongo.userdata(username)
     if data['password']==password:
         valid=True
-        return jsonify({'valid':True})
+        return jsonify(data)
     else:
         valid=False
         return jsonify({'valid':False})
