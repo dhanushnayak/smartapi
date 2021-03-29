@@ -9,7 +9,7 @@ app = flask.Flask(__name__)
 #app.config["DEBUG"] = True
 mongo = MongoData.mongodata()
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
     return '''<h1>Smart Helmet Backend</h1>
 <p></p>'''
