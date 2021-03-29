@@ -22,7 +22,7 @@ def user(username,password):
         valid=True
         df=pd.DataFrame(data, index=[1])
         res=df.drop("_id",axis=1)
-        return jsonify(json.loads(df.to_json(orient='records')))
+        return jsonify(json.loads(res.to_json(orient='records')))
     else:
         valid=False
         return jsonify({'valid':False})
