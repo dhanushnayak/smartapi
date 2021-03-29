@@ -19,7 +19,8 @@ def user(username,password):
     data = mongo.userdata(username)
     if data['password']==password:
         valid=True
-        return jsonify(data)
+        df=pd.DataFrame(data)
+        return jsonify(json.loads(df.to_json(orient='records')))
     else:
         valid=False
         return jsonify({'valid':False})
