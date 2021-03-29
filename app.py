@@ -18,8 +18,10 @@ def home():
 def user(username,password):
     data = mongo.userdata(username)
     if data['password']==password:
+        print(data)
         valid=True
-        df=pd.DataFrame(data,index=[1])
+        df=pd.DataFrame(data, index=[1])
+        res=df.drop("_id",axis=1)
         return jsonify(json.loads(df.to_json(orient='records')))
     else:
         valid=False
