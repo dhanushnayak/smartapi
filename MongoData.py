@@ -22,9 +22,12 @@ class mongodata():
         idx=value.insert_one(d)
         return idx.inserted_id
     def userdata(self,userid):
+        l=[]
         value = self.helmet['users']
-        myuser = value.find_one({"UserID":userid})
+        myuser = value.find({"UserID":userid})
         if myuser is None:
             self.valid = False
-        return myuser
+        for x in myuser:
+            l.append(x)
+        return l
     
