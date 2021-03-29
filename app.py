@@ -14,7 +14,7 @@ def home():
     return '''<h1>Smart Helmet Backend</h1>
 <p></p>'''
 
-@app.route("/api/user/valid/<username>/<password>/",methods=['GET'])
+@app.route("/api/user/<username>/<password>/valid",methods=['GET'])
 def user(username,password):
     data = mongo.userdata(username)
     if data['password']==password:
@@ -24,7 +24,7 @@ def user(username,password):
         valid=False
         return jsonify({'valid':False})
 
-@app.route("/api/user/<username>/getalco",methods=['GET'])
+@app.route("/api/user/<username>/getalcohol",methods=['GET'])
 def getalcohol(username):
     
         data = mongo.getAlcohol(username)
