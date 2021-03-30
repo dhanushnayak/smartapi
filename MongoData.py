@@ -23,7 +23,7 @@ class mongodata():
         return idx.inserted_id
     def userdata(self,userid):
         value = self.helmet['users']
-        myuser = value.find_one({"UserID":userid})
+        myuser = value.find_one({"email":userid})
         if myuser is None:
             self.valid = False
         return myuser
