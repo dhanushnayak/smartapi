@@ -1,6 +1,6 @@
 import flask
 import json
-from flask import request, jsonify
+from flask import request, jsonify,make_response
 import MongoData 
 import pandas as pd
 valid = False
@@ -25,7 +25,7 @@ def user(username,password):
         return jsonify(json.loads(res.to_json(orient='records')))
     else:
         valid=False
-        return jsonify({'valid':False})
+        return make_response(jsonify({'valid':False}),404)
 
 @app.route("/api/user/<username>/getalcohol",methods=['GET'])
 def getalcohol(username):
