@@ -28,7 +28,7 @@ def user(username,password):
         return make_response(jsonify({'valid':False}),404)
 
 @app.route("/api/user/<username>/status/<status>",methods=['GET'])
-def onthedevice(status):
+def onthedevice(username,status='on'):
     if status.lower()=='on':
         return jsonify({"status":'on'})
     else:
