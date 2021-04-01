@@ -27,6 +27,12 @@ def user(username,password):
         valid=False
         return make_response(jsonify({'valid':False}),404)
 
+@app.route("/api/user/<username>/status/<status>",methods=['GET'])
+def onthedevice(status):
+    if status.lower()=='on':
+        return jsonify({"status":'on'})
+    else:
+        return jsonify({'status':'off'})
 @app.route("/api/user/<username>/getalcohol",methods=['GET'])
 def getalcohol(username):
     
