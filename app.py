@@ -32,10 +32,10 @@ def user(username,password):
 def onthedevice(username,status=None):
     if status is not None:
         if status.lower()=='on':
-            mongo.setstatus(username,status)
+            mongo.setstatus(user=username,value=status)
             return jsonify({"status":status})
         else:
-            mongo.setstatus(username,status)
+            mongo.setstatus(user=username,value=status)
             return jsonify({"status":status})
     else:
         return make_response(jsonify({'valid':False}),404)
