@@ -28,11 +28,18 @@ def user(username,password):
         return make_response(jsonify({'valid':False}),404)
 
 @app.route("/api/user/<username>/status/<status>",methods=['GET'])
-def onthedevice(username,status='on'):
-    if status.lower()=='on':
-        return jsonify({"status":'on'})
+@app.route("/api/user/<username>/status/",methods=['GET'])
+def onthedevice(username,status=None):
+    if status is not None:
+        if status.lower()=='on':
+            mongo.setstatus(username,status)
+            return jsonify({"status":status})
+        else:
+            mongo.setstatus(username,status)
+            return jsonify({"status":status})
     else:
-        return jsonify({'status':'off'})
+        return make_response(jsonify({'valid':False}),404)
+    
 @app.route("/api/user/<username>/getalcohol",methods=['GET'])
 def getalcohol(username):
     
