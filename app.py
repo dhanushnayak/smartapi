@@ -32,7 +32,7 @@ def getalcohol(username):
     
         data = mongo.getAlcohol(username)
         df=pd.DataFrame(data)
-        res=df.drop('_id',axis=1).sort_values(by='Time',ascending=False)
+        res=df.drop('_id',axis=1).sort_values(by='Time',ascending=True)
         return jsonify(json.loads(res.to_json(orient='records')))
    
 
