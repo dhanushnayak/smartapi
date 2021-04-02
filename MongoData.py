@@ -30,11 +30,8 @@ class mongodata():
     
     def setstatus(self,user,value):
         col = self.helmet.get_collection("status_check")
-        value={"led":str(value)}
         query = {"userid":str(user)}
-        if len(list(col.find(query)))==0:
-            col.insert_one({**query,**value})
-        else:
-            newvalues = { "$set": { "led": str(value) } }
-            col.update_one(query,newvalues)
+        newvalues = { "$set": { "led" : value, "Time":datetime.datetime.utcnow() } }
+        col.update_one(query,newvalues,upsert=True)
+
     
