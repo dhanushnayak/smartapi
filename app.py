@@ -50,7 +50,12 @@ def onthedevice(username,status=None):
             print("Data Frame = ",df)
             return jsonify(json.loads(df)[0])
     else:
-        return make_response(jsonify({'valid':False}),404)
+            d = mongo.getstatus(username)
+            if d is None:
+                return make_response(jsonify({'valid':False}),404)
+            df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
+            print("Data Frame = ",df)
+            return jsonify(json.loads(df)[0])
             
         
 @app.route("/api/user/<username>/getalcohol",methods=['GET'])
