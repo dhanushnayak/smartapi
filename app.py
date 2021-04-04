@@ -33,7 +33,9 @@ def onthedevice(username,status=None):
     if status is not None:
         if status.lower()=='on':
             mongo.setstatus(user=username,value=status)
-            return jsonify({"status":status})
+            d = mongo.getstatus(user=username)
+            df = pd.DataFrame(d)
+            return jsonify(json.loads(df.to_json(orient='records')))
         else:
             mongo.setstatus(user=username,value=status)
             return jsonify({"status":status})
