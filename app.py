@@ -36,7 +36,7 @@ def onthedevice(username,status=None):
         if status.lower()=='on':
             mongo.setstatus(username,status)
             d = mongo.getstatus(username)
-            if d is not None:
+            if d is None:
                 return make_response(jsonify({'valid':False}),404)
             df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
             print("Data Frame = ",df)
@@ -44,7 +44,7 @@ def onthedevice(username,status=None):
         else:
             mongo.setstatus(username,status)
             d = mongo.getstatus(username)
-            if d is not None:
+            if d is None:
                 return make_response(jsonify({'valid':False}),404)
             df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
             print("Data Frame = ",df)
