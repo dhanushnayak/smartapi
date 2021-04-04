@@ -23,21 +23,23 @@ class mongodata():
         return idx.inserted_id
     def userdata(self,userid):
         value = self.helmet['users']
-        myuser = value.find_one({"email":userid})
+        myuser = value.find_one({"UserID":userid})
         if myuser is None:
             self.valid = False
         return myuser
-    
+
     def setstatus(self,user,value):
         col = self.helmet.get_collection("status_check")
+     
         query = {"userid":str(user)}
+       
         newvalues = { "$set": { "led" : value, "Time":datetime.datetime.utcnow() } }
         col.update_one(query,newvalues,upsert=True)
-   def getstatus(self,user):
+
+    def getstatus(self,user):
         col = self.helmet.get_collection("status_check")
-        val = col.find_one({'userid':str(user)})
-        if val is None:
-            return None
-        else:
-            return val
-    
+     
+        query = {"userid":str(user)}
+        val=col.find_one(query)
+        #print(val)
+        return val
