@@ -33,5 +33,11 @@ class mongodata():
         query = {"userid":str(user)}
         newvalues = { "$set": { "led" : value, "Time":datetime.datetime.utcnow() } }
         col.update_one(query,newvalues,upsert=True)
-
+   def getstatus(self,user):
+        col = self.helmet.get_collection("status_check")
+        val = col.find_one({'userid':str(user)})
+        if val is None:
+            return None
+        else:
+            return val
     
