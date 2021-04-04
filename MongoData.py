@@ -21,9 +21,9 @@ class mongodata():
         value = self.helmet['alcohol']
         idx=value.insert_one(d)
         return idx.inserted_id
-    def userdata(self,userid):
+    def userdata(self,email):
         value = self.helmet['users']
-        myuser = value.find_one({"UserID":userid})
+        myuser = value.find_one({"email":email})
         if myuser is None:
             self.valid = False
         return myuser
