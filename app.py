@@ -31,17 +31,28 @@ def user(username,password):
 @app.route("/api/user/<username>/status/",methods=['GET'])
 def onthedevice(username,status=None):
     if status is not None:
+       
+       
         if status.lower()=='on':
-            mongo.setstatus(user=username,value=status)
-            d = mongo.getstatus(user=username)
-            df = pd.DataFrame(d)
-            return jsonify(json.loads(df.to_json(orient='records')))
+            mongo.setstatus(username,status)
+            d = mongo.getstatus(username)
+            if d is not None:
+                return make_response(jsonify({'valid':False}),404)
+            df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
+            print("Data Frame = ",df)
+            return jsonify(json.loads(df)[0])
         else:
-            mongo.setstatus(user=username,value=status)
-            return jsonify({"status":status})
+            mongo.setstatus(username,status)
+            d = mongo.getstatus(username)
+            if d is not None:
+                return make_response(jsonify({'valid':False}),404)
+            df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
+            print("Data Frame = ",df)
+            return jsonify(json.loads(df)[0])
     else:
         return make_response(jsonify({'valid':False}),404)
-    
+            
+        
 @app.route("/api/user/<username>/getalcohol",methods=['GET'])
 def getalcohol(username):
     
