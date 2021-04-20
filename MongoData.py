@@ -28,12 +28,12 @@ class mongodata():
             self.valid = False
         return myuser
 
-    def setstatus(self,user,value):
+    def setstatus(self,user,value,device):
         col = self.helmet.get_collection("status_check")
      
         query = {"userid":str(user)}
-       
-        newvalues = { "$set": { "led" : value, "Time":datetime.datetime.utcnow() } }
+        device1 = str(device).lower()
+        newvalues = { "$set": { device1 : value, "Time":datetime.datetime.utcnow() } }
         col.update_one(query,newvalues,upsert=True)
 
     def getstatus(self,user):
