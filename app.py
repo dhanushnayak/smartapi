@@ -27,14 +27,14 @@ def user(username,password):
         valid=False
         return make_response(jsonify({'valid':False}),404)
 
-@app.route("/api/user/<username>/status/<status>",methods=['GET'])
+@app.route("/api/user/<username>/status/<device>/<status>",methods=['GET'])
 @app.route("/api/user/<username>/status/",methods=['GET'])
-def onthedevice(username,status=None):
+def onthedevice(username,device=None,status=None):
     if status is not None:
        
        
         if status.lower()=='on':
-            mongo.setstatus(username,status)
+            mongo.setstatus(username,value=status,device=device.lower())
             d = mongo.getstatus(username)
             if d is None:
                 return make_response(jsonify({'valid':False}),404)
@@ -42,7 +42,7 @@ def onthedevice(username,status=None):
             print("Data Frame = ",df)
             return jsonify(json.loads(df)[0])
         else:
-            mongo.setstatus(username,status)
+            mongo.setstatus(username,value=status,device=device.lower())
             d = mongo.getstatus(username)
             if d is None:
                 return make_response(jsonify({'valid':False}),404)
@@ -68,4 +68,5 @@ def getalcohol(username):
    
 
 if __name__=="__main__":
+    #app.run(host='0.0.0.0', port=5001)
     app.run(debug=True)
