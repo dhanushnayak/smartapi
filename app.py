@@ -62,9 +62,12 @@ def onthedevice(username,device=None,status=None):
 def getalcohol(username):
     
         data = mongo.getAlcohol(username)
-        df=pd.DataFrame(data)
-        res=df.drop('_id',axis=1).sort_values(by='Time',ascending=True)
-        return jsonify(json.loads(res.to_json(orient='records')))
+        if data:
+            df=pd.DataFrame(data)
+            res=df.drop('_id',axis=1).sort_values(by='Time',ascending=True)
+            return jsonify(json.loads(res.to_json(orient='records')))
+        else:
+            return make_response(jsonify({'valid':False}),404)
    
 @app.route("/api/user/<username>/getlocation",methods=['GET'])
 def getlocation(username):
@@ -73,6 +76,7 @@ def getlocation(username):
         return jsonify({"lat":data[0],'lon':data[1]})
     else:
         return make_response(jsonify({'valid':False}),404)
+
 if __name__=="__main__":
     #app.run(host='0.0.0.0', port=5001)
     app.run(debug=True)
