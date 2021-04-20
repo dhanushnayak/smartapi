@@ -66,7 +66,13 @@ def getalcohol(username):
         res=df.drop('_id',axis=1).sort_values(by='Time',ascending=True)
         return jsonify(json.loads(res.to_json(orient='records')))
    
-
+@app.route("/api/user/<username>/getlocation",methods=['GET'])
+def getlocation(username):
+    data = mongo.getlocation(username)
+    if data:
+        return jsonify({"lat":data[0],'lon':data[1]})
+    else:
+        return make_response(jsonify({'valid':False}),404)
 if __name__=="__main__":
     #app.run(host='0.0.0.0', port=5001)
     app.run(debug=True)
