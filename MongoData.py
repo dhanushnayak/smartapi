@@ -8,7 +8,7 @@ class mongodata():
         self.db = pymongo.MongoClient("mongodb://smarthelmet:dhanushp@cluster0-shard-00-00.ok7zk.mongodb.net:27017,cluster0-shard-00-01.ok7zk.mongodb.net:27017,cluster0-shard-00-02.ok7zk.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-96d086-shard-0&authSource=admin&retryWrites=true&w=majority")
         self.helmet=self.db['helmet']
         self.valid = False
-        
+    
     def getAlcohol(self,userid):
         l=[]
         alco=self.helmet['alcohol']
@@ -43,6 +43,7 @@ class mongodata():
         val=col.find_one(query)
         #print(val)
         return val
+
     def getlocation(self,user):
         col = self.helmet.get_collection("users")
         query = {"userid":str(user)}
