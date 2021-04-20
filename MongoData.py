@@ -43,3 +43,8 @@ class mongodata():
         val=col.find_one(query)
         #print(val)
         return val
+    def getlocation(self,user):
+        col = self.helmet.get_collection("users")
+        query = {"userid":str(user)}
+        val = col.find_one(query)
+        return (val['lat'],val['log'])
