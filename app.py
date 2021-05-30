@@ -114,10 +114,18 @@ def updatelocation(username,lat,log):
         return make_response(jsonify({'valid':False}),404)
 
                
+              
 @app.route("/api/user/<username>/getalcohol",methods=['GET'])
 def getalcohol(username):
         data = mongo.getAlcohol(username)
-        data.pop('_id')
+        if data != None:
+            data.pop('_id')
         return jsonify(data)
 
 
+@app.route("/api/user/<username>/getmessage",methods=['GET'])
+def getMessage(username):
+    data = mongo.getMessage(username)
+    if data != None:
+        data.pop('_id')
+    return jsonify(data)
