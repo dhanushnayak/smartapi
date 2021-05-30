@@ -28,28 +28,33 @@ def user(username,password):
         valid=False
         return make_response(jsonify({'valid':False}),404)
 
-@app.route("/api/user/<username>/status/<status>",methods=['GET'])
+@app.route("/api/user/<username>/status/<device>/<status>",methods=['GET'])
 @app.route("/api/user/<username>/status/",methods=['GET'])
-def onthedevice(username,status=None):
+def onthedevice(username,device=None,status=None):
     if status is not None:
         if status.lower()=='on':
-            mongo.setstatus(username,status)
+            mongo.setstatus(username,value=status,device=device.lower())
             d = mongo.getstatus(username)
-            if d is  None:
+            if d is None:
                 return make_response(jsonify({'valid':False}),404)
             df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
             print("Data Frame = ",df)
             return jsonify(json.loads(df)[0])
         else:
-            mongo.setstatus(username,status)
+            mongo.setstatus(username,value=status,device=device.lower())
             d = mongo.getstatus(username)
-            if d is  None:
+            if d is None:
                 return make_response(jsonify({'valid':False}),404)
             df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
             print("Data Frame = ",df)
             return jsonify(json.loads(df)[0])
     else:
-        return make_response(jsonify({'valid':False}),404)
+            d = mongo.getstatus(username)
+            if d is None:
+                return make_response(jsonify({'valid':False}),404)
+            df = pd.DataFrame([d]).drop('_id',axis=1).to_json(orient='records')
+            print("Data Frame = ",df)
+            return jsonify(json.loads(df)[0])
 
 @app.route("/api/user/<username>/falldetect/<status>/<speed>",methods=['GET']) 
 def sendsms(username,status,speed):
