@@ -7,7 +7,7 @@ import pandas as pd
 valid = False
 
 app = flask.Flask(__name__)
-#app.config["DEBUG"] = True
+app.config["DEBUG"] = True
 
 mongo = MongoData.mongodata()
 i=0
