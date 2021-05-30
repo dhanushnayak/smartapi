@@ -106,3 +106,8 @@ class mongodata():
         if user == None:
             return None
         return user['lat'],user['log']
+    
+    def getMessage(self,user):
+        db = self.helmet['Message']
+        user = db.find_one({"userid":user})
+        return user
