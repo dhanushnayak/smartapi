@@ -124,7 +124,7 @@ def getalcohol(username):
 
 
 @app.route("/api/user/<username>/getmessage",methods=['GET'])
-def getMessage(username):
+def getmessage(username):
     data = mongo.getMessage(username)
     if data != None:
         data.pop('_id')
