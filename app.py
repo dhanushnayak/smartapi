@@ -76,7 +76,7 @@ def sendsms(username,status,speed):
                 return jsonify({'sent':msg1})
         
     return make_response(jsonify({"msg":msg1}),404)
-@app.route("/api/user/<username>/ohsms/<status>/",methods=['GET']) 
+@app.route("/api/user/<username>/ohsms/<status>",methods=['GET']) 
 def sendsmsoh(username,status):
     msg1=''
     print(status)
