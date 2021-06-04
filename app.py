@@ -76,7 +76,24 @@ def sendsms(username,status,speed):
                 return jsonify({'sent':msg1})
         
     return make_response(jsonify({"msg":msg1}),404)
-                
+@app.route("/api/user/<username>/ohsms/<status>/",methods=['GET']) 
+def sendsmsoh(username,status):
+    msg1=''
+    print(status)
+    if str(status).lower() == 'high':
+       msg1="HIGH Value of Alcohol"
+    elif str(status).lower() == 'low':
+        msg1 ="Low value of Alcohol"
+    elif str(status).lower() == "medium":
+        msg1 ="Moderate Value of Alcohol"
+       
+    sms1 = Sms(msg=msg1,user=username)
+    send_status =  sms1.Send()
+    if send_status[0]:
+            if mongo.MessageSaved(msg=msg1,user=username,status=True,time=send_status[1]) != None:
+                return jsonify({'sent':msg1})
+    else:
+        return make_response(jsonify({"msg":msg1}),404)               
 @app.route("/api/user/<username>/update/number/<number>",methods=['GET']) 
 def changemynumber(username,number):
     if mongo.ChangeMyContact(username,number)=='invalid number':
