@@ -146,3 +146,17 @@ def getmessage(username):
     if data != None:
         data.pop('_id')
     return jsonify(data)
+
+@app.route("/api/user/<username>/addoh/<value>/<loc>/<alert>", methods=['GET'])
+@app.route("/api/user/<username>/addoh/<value>/<loc>", methods=['GET'])   
+def addoh(username,value,loc,alert=None):
+    value1 = round(float(value),3)
+    if alert == None:
+        alert =False
+    if(alert=='on'):
+        alert=True
+    print(value1,alert)
+    if mongo.addalcoholtodb(userid=username,loc=loc,alert=alert,value=value1)==None:
+        return make_response(jsonify({'valid':False}),404)
+    else:
+        return jsonify({'value':value1,"status":loc})
