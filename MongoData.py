@@ -14,7 +14,7 @@ class mongodata():
         quey = {"userid":userid}
         return alco.find_one(quey)
         
-    def addalcoholtodb(self,userid,loc,bike='KA-51-Y-2369',value=None,alert=False,):
+    def addalcoholtodb(self,userid,loc,alert,bike='KA-51-Y-2369',value=None):
         d={'value':value,'loc':loc,'alert':alert,'Time':datetime.datetime.utcnow()}
         value = self.helmet['alcohol']
         if value.find_one({"userid":userid})==None:
