@@ -54,8 +54,9 @@ class mongodata():
         db = self.helmet['Message']
         userdb = self.helmet['users']
         user1  = userdb.find_one({"userid":user})
+        userid = db.find_one({"userid":user})
         message = {"recipt":msg,"time":time,"status":status,"to":user1['parent']}
-        if user1==None:
+        if userid==None:
             
             d= {'user':user1['Name'],"userid":user1['userid'],"message":[message]}
             idx = db.insert_one(d)
